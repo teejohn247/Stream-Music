@@ -418,8 +418,7 @@ Assigned to: Theme Forest
     jQuery(window).on('load', function() {
         setTimeout(function() {
             $('body').addClass('loaded');
-        }, 500);
-        // Li Lenght
+        }, 10000);
         if ($('.jp-playlist ul li').length > 3) {
             $('.jp-playlist').addClass('find_li');
         }
@@ -440,4 +439,4 @@ Assigned to: Theme Forest
         }, 600);
         return false
     });
-})(jQuery);
+});

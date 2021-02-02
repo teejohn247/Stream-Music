@@ -1,8 +1,57 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { connect, useDispatch } from 'react-redux';
+import { getMusic } from '../actions/music';
+import { getTopRated } from '../actions/topRated';
+import { getPlaylist } from '../actions/playlist';
+// import Spinner from './layout/Spinner';
+import Loader from './Loader';
+import Grid from './Grid';
+import TopSongs from './TopSongs';
+import Swiper from 'react-id-swiper';
+import ReactJkMusicPlayer from 'react-jinke-music-player';
+import 'react-jinke-music-player/assets/index.css';
 
-const Home = () => {
-return ( 
-<Fragment>
+const Home = ({ getMusic, getTopRated, getPlaylist, playlist, topRated:{music}, music: { musics, loading }}) => {
+    useEffect(() => {
+       const getUsers = async () => {
+       await getTopRated();
+       await getMusic();
+       await getPlaylist();
+  };
+  getUsers();
+  }, []);
+    // useEffect(() => {
+    // }, []);
+    var options = {
+    // playing: false,
+     audioLists: playlist.audioLists,
+      autoPlay: false,
+      mode: "full",
+      clearPriorAudioLists: true,
+      defaultPosition: {
+        bottom: 0,
+    },
+}
+const getAudioInstance = instance => {
+return this.player = instance;
+}
+
+console.log(options)
+    const params = {
+      pagination: {
+        el: '.swiper-pagination',
+        type: 'bullets',
+        clickable: true
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev'
+      },
+      spaceBetween: 30
+    }
+return loading == true ? ( <Loader /> )
+ : (
 <div className="ms_content_wrapper padder_top80">
   <div className="ms_header">
     <div className="ms_top_left">
@@ -48,41 +97,31 @@ return (
     </div>
   </div>
   {/*-Recently Played Music-*/}
+  <div>
+    <Swiper {...params}>
+    {musics.map(mus => (
+          <Grid key={mus.file_id} next={this.player} playIndex={mus.playIndex} mus={mus.files} />
+        ))}
+        {/* <div>Slide 1</div>
+        <div>Slide 2</div>
+        <div>Slide 3</div>
+        <div>Slide 4</div>
+        <div>Slide 5</div> */}
+    </Swiper>
+    </div>
+
   <div className="ms_rcnt_slider">
     <div className="ms_heading">
       <h1>Recently Played</h1>
       <span className="veiw_all"><a href="#">view more</a></span>
     </div>
+    
     <div className="swiper-container">
       <div className="swiper-wrapper">
-        <div className="swiper-slide">
-          <div className="ms_rcnt_box">
-            <div className="ms_rcnt_box_img">
-              <img src="images/music/r_music1.jpg" alt />
-              <div className="ms_main_overlay">
-                <div className="ms_box_overlay" />
-                <div className="ms_more_icon">
-                  <img src="images/svg/more.svg" alt />
-                </div>
-                <ul className="more_option">
-                  <li><a href="#"><span className="opt_icon"><span className="icon icon_fav" /></span>Add To Favourites</a></li>
-                  <li><a href="#"><span className="opt_icon"><span className="icon icon_queue" /></span>Add To Queue</a></li>
-                  <li><a href="#"><span className="opt_icon"><span className="icon icon_dwn" /></span>Download Now</a></li>
-                  <li><a href="#"><span className="opt_icon"><span className="icon icon_playlst" /></span>Add To Playlist</a></li>
-                  <li><a href="#"><span className="opt_icon"><span className="icon icon_share" /></span>Share</a></li>
-                </ul>
-                <div className="ms_play_icon">
-                  <img src="images/svg/play.svg" alt />
-                </div>
-              </div>
-            </div>
-            <div className="ms_rcnt_box_text">
-              <h3><a href="#">Dream Your Moments (Duet)</a></h3>
-              <p>Ava Cornish &amp; Brian Hill</p>
-            </div>
-          </div>
-        </div>
-        <div className="swiper-slide">
+        
+       
+
+        {/* <div className="swiper-slide">
           <div className="ms_rcnt_box">
             <div className="ms_rcnt_box_img">
               <img src="images/music/r_music2.jpg" alt />
@@ -108,8 +147,8 @@ return (
               <p>Ava Cornish &amp; Brian Hill</p>
             </div>
           </div>
-        </div>
-        <div className="swiper-slide">
+        </div> */}
+        {/* <div className="swiper-slide">
           <div className="ms_rcnt_box">
             <div className="ms_rcnt_box_img">
               <img src="images/music/r_music3.jpg" alt />
@@ -297,8 +336,8 @@ return (
               <p>Ava Cornish &amp; Brian Hill</p>
             </div>
           </div>
-        </div>
-        <div className="swiper-slide">
+        </div> */}
+        {/* <div className="swiper-slide">
           <div className="ms_rcnt_box">
             <div className="ms_rcnt_box_img">
               <img src="images/music/r_music4.jpg" alt />
@@ -324,7 +363,7 @@ return (
               <p>Ava Cornish &amp; Brian Hill</p>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
     {/* Add Arrows */}
@@ -332,6 +371,34 @@ return (
     <div className="swiper-button-prev slider_nav_prev" />
   </div>
   {/*-Weekly Top 15-*/}
+
+  
+
+  <div className="ms_weekly_wrapper">
+    <div className="ms_weekly_inner">
+      <div className="row">
+        <div className="col-lg-12">
+          <div className="ms_heading">
+           <div className="col-lg-4 col-md-12 padding_right40">
+          <div className="ms_weekly_box">
+            <h1>weekly top 15</h1>
+          </div>
+        </div>
+
+            {music.map(mus => (
+                    <TopSongs key={mus.playIndex} next={this.player} playIndex={mus.playIndex} mus={mus.files} />
+                  ))}
+
+          </div>
+           </div>
+
+        </div>
+    </div>
+  </div>
+<ReactJkMusicPlayer {...options} getAudioInstance={getAudioInstance} />
+
+
+{/* 
   <div className="ms_weekly_wrapper">
     <div className="ms_weekly_inner">
       <div className="row">
@@ -877,7 +944,7 @@ return (
         </div>
       </div>
     </div>
-  </div>
+  </div> */}
   {/*-Featured Artists Music-*/}
   <div className="ms_featured_slider">
     <div className="ms_heading">
@@ -1986,9 +2053,21 @@ return (
     <div className="swiper-button-next4 slider_nav_next" />
     <div className="swiper-button-prev4 slider_nav_prev" />
   </div>
-  {/*--Main div close--*/}
 </div>
-</Fragment>
-) 
+)
 }
-export default Home;
+
+Home.PropTypes = {
+    getMusic: PropTypes.func.isRequired,
+    music: PropTypes.object.isRequired,
+    topRated: PropTypes.object.isRequired,
+    getTopRated: PropTypes.func.isRequired,
+    playlist: PropTypes.object.isRequired,
+}
+const mapStateToProps = (state) => ({
+    music: state.music,
+    playlist: state.playlist,
+    topRated: state.topRated,
+
+})
+export default connect(mapStateToProps, { getMusic, getPlaylist, getTopRated })(Home);
