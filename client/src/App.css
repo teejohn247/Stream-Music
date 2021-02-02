@@ -13,6 +13,47 @@
   }
 }
 
+.swiper-slide{
+  width: 30% !important;
+}
+.audio__player{
+    position: fixed;
+    bottom: 0;
+    left: 80px !important;
+    width: 95% !important;
+    background-color: #252525;
+    z-index: 999;
+}
+
+.progress-bar {
+  background-color: transparent !important;
+}
+
+/* #FooterPlaylist .jp-gui {
+  background-image: url(./images/player_bg.jpg);
+  background-size: cover;
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+  z-index: 10000;
+  box-shadow: 0px 0px 24px 6px rgb(4 4 4 / 20%);
+  transition: all 0.4s ease-in-out;
+  -webkit-transition: all 0.4s ease-in-out;
+  -moz-transition: all 0.4s ease-in-out;
+  -ms-transition: all 0.4s ease-in-out;
+  -o-transition: all 0.4s ease-in-out;
+} */
+/* 
+#FooterPlaylist .fa-step-backward {
+  background: url(./images/svg/play_icon.svg) !important;
+  width: 30px;
+  height: 30px;
+  background-repeat: no-repeat;
+  display: inline-block;
+  background-color: transparent;
+  cursor: pointer;
+} */
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;

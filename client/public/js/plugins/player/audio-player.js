@@ -1,5 +1,61 @@
+// import store from '../../../../src/store';
+
 $(function() {
     "use strict";
+
+    var playlist;
+    fetch_playlist()
+
+    function fetch_playlist() {
+
+        $.ajax({
+
+            type: "GET",
+            dataType: "json",
+            url: "https://api.kdaudiolibrary.com/api/v1/all_files/1/10",
+            // data: {
+            //     "user_id": user_id,
+            //     "module_id": id
+            // },
+            // timeout: 60000,
+
+
+            success: function(response) {
+
+                var list = ""
+                if (response.status == '200') {
+                    $.each(response.records, function(i, v) {
+                        list +=
+                            {
+                                image :"https://api.kdaudiolibrary.com/api/v1/file/" + v.files[0].filename + "/" + v.files[0].id,	
+                                title: v.title,
+                                artist: v.author,
+                                mp3: "https://api.kdaudiolibrary.com/api/v1/file/" + v.files[1].filename + "/" + v.files[1].id,
+                                oga: "http://www.jplayer.org/audio/ogg/TSP-01-Cro_magnon_man.ogg",
+                                option : myPlayListOtion
+                            };
+                    });
+                    console.log('dd', JSON.stringify(list))
+
+                    // playlist.append(list)
+                    // playlist
+                }
+                // console.log(list_mds);
+                // if (list_mds == "") {
+                //     $('#list_comp_tables').html(
+                //         `<span>You have no active subscription for ${landing} module</span>`);
+                //     $("#modal_choose_company").modal("show");
+                // }
+                // $('#list_comp_tables').html(list_mds);
+                // $("#modal_choose_company").modal("show");
+
+            },
+            error: function(response) {
+
+            }
+        })
+    }
+
     if ($('.audio-player').length) {
 		var myPlayListOtion = '<ul class="more_option"><li><a href="#"><span class="opt_icon" title="Add To Favourites"><span class="icon icon_fav"></span></span></a></li><li><a href="#"><span class="opt_icon" title="Add To Queue"><span class="icon icon_queue"></span></span></a></li><li><a href="#"><span class="opt_icon" title="Download Now"><span class="icon icon_dwn"></span></span></a></li><li><a href="#"><span class="opt_icon" title="Add To Playlist"><span class="icon icon_playlst"></span></span></a></li><li><a href="#"><span class="opt_icon" title="Share"><span class="icon icon_share"></span></span></a></li></ul>';
 		
