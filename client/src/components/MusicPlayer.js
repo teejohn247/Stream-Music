@@ -20,7 +20,7 @@ const MusicPlayer = ({ getPlaylist, playlist }) => {
 
 
     var options = {
-        // playing: false,
+        playing: false,
          audioLists: playlist.audioLists,
           autoPlay: false,
           mode: "full",

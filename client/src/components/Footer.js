@@ -90,7 +90,7 @@ return (
     <div className="col-lg-12">
       <div className="ms_copyright">
         <div className="footer_border" />
-        <p>Copyright © 2018 <a href="#">The Miraculous Music Template</a>. All Rights Reserved.</p>
+        <p>Copyright © 2021 <a href="#"></a>. All Rights Reserved.</p>
       </div>
     </div>
   </div>
